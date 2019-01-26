@@ -1,13 +1,18 @@
-from haystack import views
-
 from oscar.apps.search.signals import user_search
 from oscar.core.loading import get_class, get_model
 
 Product = get_model('catalogue', 'Product')
 FacetMunger = get_class('search.facets', 'FacetMunger')
 
+is_solr_supported = get_class('search.features', 'is_solr_supported')
 
-class FacetedSearchView(views.FacetedSearchView):
+if is_solr_supported():
+    from haystack.views import FacetedSearchView
+else:
+    FacetedSearchView = object
+
+
+class FacetedSearchView(FacetedSearchView):
     """
     A modified version of Haystack's FacetedSearchView
 

@@ -1,6 +1,5 @@
 from django.core.paginator import InvalidPage, Paginator
 from django.utils.translation import ugettext_lazy as _
-from haystack import connections
 
 from oscar.core.loading import get_class
 
@@ -129,6 +128,8 @@ class SearchHandler(object):
         It is heavily based on Haystack's SearchQuerySet.post_process_results,
         but works on the paginated results instead of all of them.
         """
+        from haystack import connections
+
         objects = []
 
         models_pks = loaded_objects = {}

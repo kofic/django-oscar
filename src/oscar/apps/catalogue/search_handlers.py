@@ -4,11 +4,16 @@ from django.views.generic.list import MultipleObjectMixin
 
 from oscar.core.loading import get_class, get_model
 
-BrowseCategoryForm = get_class('search.forms', 'BrowseCategoryForm')
-SearchHandler = get_class('search.search_handlers', 'SearchHandler')
 is_solr_supported = get_class('search.features', 'is_solr_supported')
 is_elasticsearch_supported = get_class('search.features', 'is_elasticsearch_supported')
 Product = get_model('catalogue', 'Product')
+
+if is_solr_supported():
+    BrowseCategoryForm = get_class('search.forms', 'BrowseCategoryForm')
+    SearchHandler = get_class('search.search_handlers', 'SearchHandler')
+else:
+    BrowseCategoryForm = object
+    SearchHandler = object
 
 
 def get_product_search_handler_class():

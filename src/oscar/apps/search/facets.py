@@ -1,7 +1,6 @@
 from collections import OrderedDict
 
 from django.conf import settings
-from haystack.query import SearchQuerySet
 from purl import URL
 
 
@@ -9,6 +8,8 @@ def base_sqs():
     """
     Return the base SearchQuerySet for Haystack searches.
     """
+    from haystack.query import SearchQuerySet
+
     sqs = SearchQuerySet()
     for facet in settings.OSCAR_SEARCH_FACETS['fields'].values():
         options = facet.get('options', {})
